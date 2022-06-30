@@ -45,7 +45,19 @@
 
 # p exp_2(5, 3)
 
-# def deep_dup(arr)
+# class Array
+
+#     def deep_dup
+#         res = []
+#         self.each do |ele|
+#             if !ele.kind_of(Array)
+#                 res << ele
+#             else
+#                 res << ele.deep_dup
+#             end
+#         end
+#         res
+#     end
 # end
 
 # def rec_fibonacci(n)
@@ -104,50 +116,79 @@
 
 # p bsearch([1, 2, 3], 1) # => 0
 # p bsearch([2, 3, 4, 5], 3) # => 1
-# p bsearch([2, 4, 6, 8, 10], 6) # => 2
-# p bsearch([1, 3, 4, 5, 9], 5) # => 3
-# p bsearch([1, 2, 3, 4, 5, 6], 6) # => 5
-# p bsearch([1, 2, 3, 4, 5, 6], 0) # => nil
-# p bsearch([1, 2, 3, 4, 5, 7], 6) # => nil
+# # p bsearch([2, 4, 6, 8, 10], 6) # => 2
+# # p bsearch([1, 3, 4, 5, 9], 5) # => 3
+# # p bsearch([1, 2, 3, 4, 5, 6], 6) # => 5
+# # p bsearch([1, 2, 3, 4, 5, 6], 0) # => nil
+# # p bsearch([1, 2, 3, 4, 5, 7], 6) # => nil
 
-def merge(left_array, right_array)
-    sorted_array = []
-    while !left_array.empty? && !right_array.empty? do
-        if left_array[0] < right_array[0]
-            sorted_array.push(left_array.shift)
-        else
-            sorted_array.push(right_array.shift)
+# def merge(left_array, right_array)
+#     sorted_array = []
+#     while !left_array.empty? && !right_array.empty? do
+#         if left_array[0] < right_array[0]
+#             sorted_array.push(left_array.shift)
+#         else
+#             sorted_array.push(right_array.shift)
+#         end
+#     end 
+#     return sorted_array.concat(left_array).concat(right_array)
+# end
+
+# # # p merge([1,5],[2,4])
+
+# def merge_sort(arr)
+#     return [] if arr.length == 0
+#     return arr if arr.length == 1
+
+#     # divide the array into the smallest unit (1 ele)
+#     # compare each ele with the adjacent ele to sort and merge them
+#     pivot = arr.length / 2
+#     left = arr[0...pivot]
+#     right =  arr[pivot..-1]
+
+#     sorted_left = merge_sort(left)
+#     sorted_right = merge_sort(right)
+
+#     return merge(sorted_left, sorted_right)
+# end
+
+# # p merge_sort([1,3,7,5])
+
+# def subsets(arr)
+#     return [[]] if arr.empty?
+
+#     subs = subsets(arr[0..-2])
+#     adding_arr = subs.map { |sub| sub + [arr[-1]]}
+#     subs + adding_arr
+# end
+
+# p subsets([]) # => [[]]
+# p subsets([1]) # => [[], [1]]
+# p subsets([1, 2]) # => [[], [1], [2], [1, 2]]
+# p subsets([1, 2, 3])
+# # => [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]
+
+def permutations(arr)
+    return [[]] if arr.empty?
+
+    ele = arr.pop
+    perms = permutations(arr)
+
+    result = []
+
+    perms.each do |perm|
+        (0..perm.length).each do |i|
+            result << perm[0...i] + [ele] + perm[i..-1]
         end
-    end 
-    return sorted_array.concat(left_array).concat(right_array)
+    end
+    return result
 end
 
-# p merge([1,5],[2,4])
+            
 
-def merge_sort(arr)
-    return [] if arr.length == 0
-    return arr if arr.length == 1
 
-    # divide the array into the smallest unit (1 ele)
-    # compare each ele with the adjacent ele to sort and merge them
-    pivot = arr.length / 2
-    left = arr[0...pivot]
-    right =  arr[pivot..-1]
 
-    sorted_left = merge_sort(left)
-    sorted_right = merge_sort(right)
 
-    return merge(sorted_left, sorted_right)
-end
 
-p merge_sort([1,3,7,5])
-
-def subsets(arr)
-    return [] if arr.length == 0
-    return [[], arr] if arr.length == 1
-    
-    
-    
-end
-
+p permutations([1,2,3])
 
